@@ -12,6 +12,11 @@ import { BookModule } from './book/book.module';
 import { OrderModule } from './order/order.module';
 import { PointModule } from './point/point.module';
 import { TicketModule } from './ticket/ticket.module';
+import { ScheduleModule } from './schedule/schedule.module';
+import { SeatModule } from './seat/seat.module';
+import { ScheduledseatModule } from './scheduledseat/scheduledseat.module';
+import { BoxModule } from './box/box.module';
+import { TheaterModule } from './theater/theater.module';
 
 @Module({
   imports: [
@@ -29,6 +34,11 @@ BookModule,
 OrderModule,
 PointModule,
 TicketModule,
+ScheduleModule,
+SeatModule,
+ScheduledseatModule,
+BoxModule,
+TheaterModule,
 ],
   controllers: [AppController],
   providers: [AppService],
