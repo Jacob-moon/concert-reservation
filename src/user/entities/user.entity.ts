@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn } from 'typeorm';
-import { Order } from '../../order/entities/order.entity';
-import { Point } from '../../point/entities/point.entity';
-import { Ticket } from '../../ticket/entities/ticket.entity';
+import { Order } from '../../user/entities/order.entity'; // 수정된 경로
+import { Point } from '../../user/entities/point.entity'; // 수정된 경로
+import { Ticket } from '../../show/entities/ticket.entity'; // 수정된 경로
 
 @Entity()
 export class User {
