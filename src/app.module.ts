@@ -17,6 +17,7 @@ import { SeatModule } from './seat/seat.module';
 import { ScheduledseatModule } from './scheduledseat/scheduledseat.module';
 import { BoxModule } from './box/box.module';
 import { TheaterModule } from './theater/theater.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ SeatModule,
 ScheduledseatModule,
 BoxModule,
 TheaterModule,
+PaymentModule,
 ],
   controllers: [AppController],
   providers: [AppService],
