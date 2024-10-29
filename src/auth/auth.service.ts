@@ -34,6 +34,7 @@ export class AuthService {
         nickname,
         points:DEFAULT_CUSTOMER_POINT
     });
+    delete user.password;
     return user;
   }
 }
