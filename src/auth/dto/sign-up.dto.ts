@@ -1,6 +1,6 @@
-import { PickType } from '@nestjs/mapped-types';
 import { User } from '../../user/entities/user.entity';
-import { IsNotEmpty, IsStrongPassword, IsString, IsBoolean } from 'class-validator';
+import { IsNotEmpty,IsStrongPassword } from 'class-validator';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 
 export class SignUpDto extends PickType(User, [
   'email',
@@ -8,10 +8,11 @@ export class SignUpDto extends PickType(User, [
   'nickname',
   'isAdmin',
 ]) {
-  @IsNotEmpty({ message: '닉네임을 입력해 주세요.' })
-  @IsString()
-  nickname: string;
-
+  /**
+   * 비밀번호 확인
+   * @example "Ex@mple23"
+   */
+  @ApiProperty({ description: '비밀번호 확인' })
   @IsNotEmpty({ message: '비밀번호 확인을 입력해 주세요.' })
   @IsStrongPassword(
     {},
@@ -20,7 +21,4 @@ export class SignUpDto extends PickType(User, [
     },
   )
   passwordConfirm: string;
-
-  @IsBoolean()
-  isAdmin: boolean;
 }
