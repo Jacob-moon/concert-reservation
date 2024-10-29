@@ -1,23 +1,39 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { UserService } from '../user/user.service';
 import { SignUpDto } from './dto/sign-up.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from '../user/entities/user.entity';
+import { Repository } from 'typeorm';
+import { DEFAULT_CUSTOMER_POINT } from 'src/constants/point.constats';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+
+  constructor(
+    @InjectRepository(User)private readonly userRepository:Repository<User>
+) {}
 
   async signUp(signUpDto: SignUpDto) {
-    const { password, passwordConfirm, ...rest } = signUpDto;
+
+    const { email, password, passwordConfirm, nickname, isAdmin } = signUpDto;
+
+    const isPasswordMatched = password ===passwordConfirm;
 
     // 비밀번호와 비밀번호 확인이 일치하는지 검증
-    if (password !== passwordConfirm) {
-      throw new BadRequestException('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+    if (!isPasswordMatched) {
+      throw new BadRequestException(
+        '비밀번호와 비밀번호 확인이 일치하지 않습니다.'
+      );
     }
-
-    // 사용자 생성 (passwordConfirm 제외)
-    const user = await this.userService.create({ ...rest, password });
-
-    // 생성된 사용자 반환
+    const existedUser= await this.userRepository.findOneBy({email});
+    if(existedUser){
+        throw new BadRequestException('이미 가입 된 이메일 입니다.')
+    }
+    const user = await this.userRepository.save({
+        email,
+        password,
+        nickname,
+        points:DEFAULT_CUSTOMER_POINT
+    });
     return user;
   }
 }
