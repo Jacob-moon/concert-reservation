@@ -1,11 +1,11 @@
-// import { PickType } from '@nestjs/mapped-types';
-// import { User } from '../../user/entities/user.entity';
+import { PickType } from '@nestjs/mapped-types';
+import { User } from '../../user/entities/user.entity';
 
-// export class SignUpDto extends PickType(User,[
-//     'email',
-//     'password',
-//     'nickname',
-// ]){
-//     passwordConfirm: string;
-// }
+export class SignUpDto extends PickType(User,[
+    'email',
+    'password',
+    'nickname',
+]){
+    passwordConfirm: string;
+}
 
