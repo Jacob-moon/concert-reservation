@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { DEFAULT_CUSTOMER_POINT } from 'src/constants/point.constats';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
+import { SignInDto } from './dto/sign-in.dto';
 
 @Injectable()
 export class AuthService {
@@ -46,4 +47,21 @@ export class AuthService {
     delete user.password;
     return user;
   }
+
+  async validateUser({ email,password }:SignInDto){
+    const user = await this.userRepository.findOne({
+      where:{email},
+      select:{userId:true,password:true}
+    });
+    const isPasswordMatched = bcrypt.compareSync(
+      password,
+      user?.password ??'',
+    );
+
+    if(!user || !isPasswordMatched){
+      return null;
+    }
+    return {userId:user.userId};
+  };
+
 }
