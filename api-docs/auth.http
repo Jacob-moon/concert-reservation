@@ -4,8 +4,9 @@ Content-Type: application/json
 
 {
   "nickname": "문승호",
-  "email": "test@example.com",
+  "email": "test55@example.com",
   "password": "!BNAas2333$",
   "passwordConfirm": "!BNAas2333$",
-  "isAdmin": false
+  "isAdmin": true
 }
+

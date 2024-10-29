@@ -11,9 +11,16 @@ async function bootstrap() {
     .setTitle('Concert-Reservation')
     .setDescription('Document for Reservation')
     .setVersion('1.0')
+    .addBearerAuth({type:'http',scheme:'bearer',bearerFormat:'JWT'})
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory);
+  SwaggerModule.setup('api', app, documentFactory,{
+    swaggerOptions:{
+      persistAuthorization:true,
+      tagsSorter:'alpha',
+      operationsSorter:'alpha'
+    }
+  });
 
   const configService =app.get(ConfigService);
   const port = configService.get<number>('SERVER_PORT',3000);
