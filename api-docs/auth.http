@@ -1,0 +1,11 @@
+### 회원가입
+
+POST http://localhost:3000/auth/sign-up
+Content-Type:application/json
+
+ { 
+    "name": "문승호", 
+    "email": "test@example.com", 
+    "password": "1234qwer", 
+    "isAdmin": false 
+    }
