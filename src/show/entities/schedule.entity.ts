@@ -1,8 +1,8 @@
 import { Entity,PrimaryGeneratedColumn,Column,ManyToOne,OneToMany,JoinColumn } from 'typeorm';
-import { Show } from './show.entity';
-import { Theater } from './theater.entity';
-import { Ticket } from './ticket.entity';
-import { ScheduledSeat } from './scheduled-seat.entity';
+import { Show } from '../../show/entities/show.entity';
+import { Theater } from '../../show/entities/theater.entity';
+import { Ticket } from '../../show/entities/ticket.entity';
+import { ScheduledSeat } from '../../show/entities/scheduled-seat.entity';
 
 @Entity()
 export class Schedule {

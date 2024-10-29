@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, OneToMany, OneToOne } from 'typeorm';
-import User from './user.entity';
+import { User } from '../../user/entities/user.entity';
 import { Payment } from '../../payment/entities/payment.entity';
-import { Ticket } from 'src/show/entities/ticket.entity';
+import { Ticket } from '../../show/entities/ticket.entity';
 
 @Entity()
 export class Order {

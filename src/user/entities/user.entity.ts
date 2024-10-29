@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn } from 'typeorm';
-import { Order } from './order.entity';
-import { Point } from './point.entity';
+import { Order } from '../../user/entities/order.entity';
+import { Point } from '../../user/entities/point.entity';
 import { Ticket } from '../../show/entities/ticket.entity';
 
 @Entity()

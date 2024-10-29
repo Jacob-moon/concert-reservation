@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Box } from './box.entity';
-import { Schedule } from './schedule.entity';
+import { Box } from '../../show/entities/box.entity';
+import { Schedule } from '../../show/entities/schedule.entity';
 
 @Entity()
 export class Theater {

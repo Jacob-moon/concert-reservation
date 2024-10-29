@@ -13,17 +13,15 @@ import { PaymentModule } from './payment/payment.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-    isGlobal:true,
-    validationSchema: ConfigModuleValidationSchema,
-}),
-TypeOrmModule.forRootAsync(
-  TypeOrmModuleOptions
-),
-AuthModule,
-UserModule,
-ShowModule,
-PaymentModule,
-],
+      isGlobal: true,
+      validationSchema: ConfigModuleValidationSchema,
+    }),
+    TypeOrmModule.forRootAsync(TypeOrmModuleOptions),
+    AuthModule,
+    UserModule,
+    ShowModule,
+    PaymentModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
