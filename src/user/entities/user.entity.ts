@@ -1,7 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn } from 'typeorm';
-import { Order } from '../../user/entities/order.entity';
-import { Point } from '../../user/entities/point.entity';
-import { Ticket } from '../../show/entities/ticket.entity';
 import { IsEmail, IsNotEmpty, IsString, IsBoolean, IsStrongPassword } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -41,15 +38,6 @@ export class User {
   @IsBoolean()
   @Column({ default: false })
   isAdmin: boolean;
-
-  @OneToMany(() => Order, (order) => order.user)
-  orders: Order[];
-
-  @OneToMany(() => Point, (point) => point.user)
-  pointTransactions: Point[];
-
-  @OneToMany(() => Ticket, (ticket) => ticket.user)
-  tickets: Ticket[];
 
   @CreateDateColumn()
   createdAt: Date;
