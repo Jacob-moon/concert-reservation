@@ -8,7 +8,6 @@ import { TypeOrmModuleOptions } from './configs/database.config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { ShowModule } from './show/show.module';
-import { PaymentModule } from './payment/payment.module';
 import { BooksModule } from './books/books.module';
 
 @Module({
@@ -21,7 +20,6 @@ import { BooksModule } from './books/books.module';
     AuthModule,
     UserModule,
     ShowModule,
-    PaymentModule,
     BooksModule,
   ],
   controllers: [AppController],

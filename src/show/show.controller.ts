@@ -10,40 +10,45 @@ export class ShowController {
 
   /**
    * 공연 생성
+   * @param createShowDto
+   * @returns
    */
   @Post()
   async create(@Body() createShowDto: CreateShowDto) {
-    const result = await this.showService.create(createShowDto);
+    const data = await this.showService.create(createShowDto);
     return {
       statusCode: HttpStatus.CREATED,
       message: '공연 생성에 성공했습니다.',
-      data: result,
+      data,
     };
   }
 
   /**
    * 모든 공연 목록 조회(검색)
+   * @returns
    */
   @Get()
   async findAll() {
-    const result = await this.showService.findAll();
+    const data = await this.showService.findAll();
     return {
       statusCode: HttpStatus.OK,
       message: '공연 목록 조회에 성공했습니다.',
-      data: result,
+      data,
     };
   }
 
   /**
    * 특정 상세 조회
+   * @param id
+   * @returns
    */
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const result = await this.showService.findOne(+id);
+    const data = await this.showService.findOne(+id);
     return {
       statusCode: HttpStatus.OK,
       message: '공연 조회에 성공했습니다.',
-      data: result,
+      data,
     };
   }
 }

@@ -22,6 +22,6 @@ export class Seat {
     updatedAt: Date;
 
     @OneToOne((type):typeof Schedule=>Schedule,(schedule)=>schedule.seat)
-    @JoinColumn()
+    @JoinColumn({ name: 'scheduleId' })
     schedule:Schedule;
 }

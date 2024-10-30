@@ -36,7 +36,7 @@ export class User {
   @IsString()
   @Column()
   nickname: string;
-
+  
   @IsNumber()
   @Column({unsigned:true})
   points:number;
