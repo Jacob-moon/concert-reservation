@@ -1,18 +1,16 @@
 import { User } from '../../user/entities/user.entity';
 import { IsNotEmpty,IsStrongPassword } from 'class-validator';
-import { ApiProperty, PickType } from '@nestjs/swagger';
+import { PickType } from '@nestjs/swagger';
 
 export class SignUpDto extends PickType(User, [
   'email',
   'password',
   'nickname',
-  'isAdmin',
 ]) {
   /**
    * 비밀번호 확인
-   * @example "Ex@mple23"
+   * @example "!Ex@mple234"
    */
-  @ApiProperty({ description: '비밀번호 확인' })
   @IsNotEmpty({ message: '비밀번호 확인을 입력해 주세요.' })
   @IsStrongPassword(
     {},

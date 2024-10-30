@@ -7,5 +7,4 @@ Content-Type: application/json
   "email": "test55@example.com",
   "password": "!BNAas2333$",
   "passwordConfirm": "!BNAas2333$",
-  "isAdmin": true
 }
