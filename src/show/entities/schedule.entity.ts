@@ -13,7 +13,7 @@ export class Schedule {
     @IsNotEmpty({message:'공연 시간과 날짜를 입력해 주세요.'})
     @IsDateString()
     @Column({type:'timestamp'})
-    showinData: Date;
+    showingDate: Date;
 
     @ManyToOne(()=>Show,(show)=>show.schedules)
     @JoinColumn({name:'showId'})

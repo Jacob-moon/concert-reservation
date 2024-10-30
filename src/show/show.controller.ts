@@ -8,18 +8,42 @@ import { ApiTags } from '@nestjs/swagger';
 export class ShowController {
   constructor(private readonly showService: ShowService) {}
 
+  /**
+   * 공연 생성
+   */
   @Post()
   async create(@Body() createShowDto: CreateShowDto) {
-    return await this.showService.create(createShowDto);
+    const result = await this.showService.create(createShowDto);
+    return {
+      statusCode: HttpStatus.CREATED,
+      message: '공연 생성에 성공했습니다.',
+      data: result,
+    };
   }
 
+  /**
+   * 모든 공연 조회
+   */
   @Get()
   async findAll() {
-    return await this.showService.findAll();
+    const result = await this.showService.findAll();
+    return {
+      statusCode: HttpStatus.OK,
+      message: '공연 목록 조회에 성공했습니다.',
+      data: result,
+    };
   }
 
+  /**
+   * 특정 공연 조회
+   */
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return await this.showService.findOne(+id);
+    const result = await this.showService.findOne(+id);
+    return {
+      statusCode: HttpStatus.OK,
+      message: '공연 조회에 성공했습니다.',
+      data: result,
+    };
   }
 }

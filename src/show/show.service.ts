@@ -1,11 +1,10 @@
 import { Injectable, NotFoundException, HttpStatus, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Show } from './entities/show.entity';
+import { Show, ShowCategory, ShowStatus } from './entities/show.entity';
 import { Schedule } from './entities/schedule.entity';
 import { CreateShowDto } from './dto/create-show.dto';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
-import { ShowCategory, ShowStatus } from './enum/show.enum';
 
 @Injectable()
 export class ShowService {
@@ -27,11 +26,23 @@ export class ShowService {
       ...createShowDto,
       status: ShowStatus.UPCOMING, // 기본 공연 상태 설정
     });
-    const data = await this.showRepository.save(newShow);
+    const savedShow = await this.showRepository.save(newShow);
+
+    // 스케줄 추가
+    const schedules = createShowDto.showingDates.map((date) => {
+      const schedule = this.scheduleRepository.create({
+        showingDate: new Date(date),
+        show: savedShow,
+      });
+      return this.scheduleRepository.save(schedule);
+    });
+
+    await Promise.all(schedules);
+
     return {
       statusCode: HttpStatus.CREATED,
       message: '공연 생성에 성공했습니다.',
-      data,
+      data: { ...savedShow, schedules },
     };
   }
 
@@ -70,7 +81,7 @@ export class ShowService {
 
   async updateShowStatus(showId: number, status: ShowStatus) {
     const show = await this.showRepository.findOne({
-      where: {showId }, 
+      where: { showId }, 
       relations: ['schedules'],
     });
     if (!show) throw new NotFoundException('해당 공연을 찾을 수 없습니다.');
