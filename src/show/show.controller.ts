@@ -1,34 +1,25 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, HttpStatus } from '@nestjs/common';
 import { ShowService } from './show.service';
 import { CreateShowDto } from './dto/create-show.dto';
-import { UpdateShowDto } from './dto/update-show.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('공연 정보')
 @Controller('shows')
 export class ShowController {
   constructor(private readonly showService: ShowService) {}
 
   @Post()
-  create(@Body() createShowDto: CreateShowDto) {
-    return this.showService.create(createShowDto);
+  async create(@Body() createShowDto: CreateShowDto) {
+    return await this.showService.create(createShowDto);
   }
 
   @Get()
-  findAll() {
-    return this.showService.findAll();
+  async findAll() {
+    return await this.showService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.showService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateShowDto: UpdateShowDto) {
-    return this.showService.update(+id, updateShowDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.showService.remove(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.showService.findOne(+id);
   }
 }

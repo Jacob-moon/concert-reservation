@@ -7,8 +7,12 @@ import { Box } from './entities/box.entity';
 import { Theater } from './entities/theater.entity';
 import { ScheduledSeat } from './entities/scheduled-seat.entity';
 import { Ticket } from './entities/ticket.entity';
+import { ShowService } from './show.service';
+import { ShowController } from './show.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Show, Schedule, Seat, Box, Theater, ScheduledSeat, Ticket])],
+  controllers: [ShowController],
+  providers: [ShowService],
 })
 export class ShowModule {}
