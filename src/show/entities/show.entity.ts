@@ -1,19 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Schedule } from './schedule.entity';
 import { IsDateString, IsEnum, IsNotEmpty, IsString } from 'class-validator';
-
-export enum ShowCategory {
-  MUSICAL = '뮤지컬',
-  CONCERT = '콘서트',
-  MOVIE = '영화',
-}
-
-export enum ShowStatus {
-  UPCOMING = '준비중',
-  RUNNING = '진행중',
-  COMPLETED = '완료',
-  CANCELED = '취소',
-}
+import {ShowCategory,ShowStatus} from '../enum/show.enum'
 
 @Entity()
 export class Show {

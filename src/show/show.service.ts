@@ -1,10 +1,11 @@
 import { Injectable, NotFoundException, HttpStatus, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Show, ShowCategory, ShowStatus } from './entities/show.entity';
+import { Show } from './entities/show.entity';
 import { Schedule } from './entities/schedule.entity';
 import { CreateShowDto } from './dto/create-show.dto';
 import { CreateScheduleDto } from './dto/create-schedule.dto';
+import {ShowCategory,ShowStatus} from '../show/enum/show.enum'
 
 @Injectable()
 export class ShowService {
