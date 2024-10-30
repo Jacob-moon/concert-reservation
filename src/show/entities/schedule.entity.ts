@@ -1,36 +1,24 @@
-import { Entity,PrimaryGeneratedColumn,Column,ManyToOne,OneToMany,JoinColumn } from 'typeorm';
-import { Show } from '../../show/entities/show.entity';
-import { Theater } from '../../show/entities/theater.entity';
-import { Ticket } from '../../show/entities/ticket.entity';
-import { ScheduledSeat } from '../../show/entities/scheduled-seat.entity';
-import { IsDateString, IsNotEmpty } from 'class-validator';
+import { Entity,PrimaryGeneratedColumn,Column ,CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity()
+
+@Entity('schedules')
 export class Schedule {
     @PrimaryGeneratedColumn()
     scheduleId: number;
 
-    /**
-     * 공연 시간과 날짜
-     * @example "2024-10-24 10:20"
-     */
-    @IsNotEmpty({message:'공연 시간과 날짜를 입력해 주세요.'})
-    @IsDateString()
-    @Column({type:'timestamp'})
-    showingDate: Date;
+    @Column()
+    showId: number;
 
-    @ManyToOne(()=>Show,(show)=>show.schedules)
-    @JoinColumn({name:'showId'})
-    show:Show;
+    @Column({type:'date'})
+    date: Date;
+    
+    @Column({type:'time'})
+    time:string;
 
-    @ManyToOne(()=>Theater,(Theater)=>Theater.schedules)
-    @JoinColumn({name:'theaterId'})
-    theater:Theater;
-
-    @OneToMany(()=>Ticket,(ticket)=>ticket.schedule)
-    tickets:Ticket[];
-
-    @OneToMany(()=>ScheduledSeat,(scheduledSeat)=>scheduledSeat.schedule)
-    scheduledSeats:ScheduledSeat[];
+    @CreateDateColumn()
+    createdAt: Date;
+  
+    @UpdateDateColumn()
+    updatedAt: Date;
 
 }

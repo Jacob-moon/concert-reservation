@@ -4,12 +4,10 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { User } from './entities/user.entity';
 import { AuthModule } from '../auth/auth.module'; 
-import { Point } from './entities/point.entity';
-import { Order } from './entities/order.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User,Point,Order]),
+    TypeOrmModule.forFeature([User]),
     forwardRef(() => AuthModule), 
   ],
   providers: [UserService],
