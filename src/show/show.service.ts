@@ -17,6 +17,12 @@ export class ShowService {
   ) {}
 
   async create(createShowDto: CreateShowDto) {
+    const { schedule,showingDate,...restOfShow} =createShowDto;
+
+    const show = await this.showRepository.save({
+      ...restOfShow,
+      schedules,
+    })
     // 카테고리 유효성 검사
     if (!Object.values(ShowCategory).includes(createShowDto.category)) {
       throw new BadRequestException('유효한 카테고리를 입력해 주세요.');

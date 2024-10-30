@@ -10,6 +10,10 @@ export class Schedule {
     @PrimaryGeneratedColumn()
     scheduleId: number;
 
+    /**
+     * 공연 시간과 날짜
+     * @example "2024-10-24 10:20"
+     */
     @IsNotEmpty({message:'공연 시간과 날짜를 입력해 주세요.'})
     @IsDateString()
     @Column({type:'timestamp'})

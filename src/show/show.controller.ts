@@ -22,7 +22,7 @@ export class ShowController {
   }
 
   /**
-   * 모든 공연 조회
+   * 모든 공연 목록 조회(검색)
    */
   @Get()
   async findAll() {
@@ -35,7 +35,7 @@ export class ShowController {
   }
 
   /**
-   * 특정 공연 조회
+   * 특정 상세 조회
    */
   @Get(':id')
   async findOne(@Param('id') id: string) {

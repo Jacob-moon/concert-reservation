@@ -1,7 +1,7 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 import { IsDateString, IsInt, IsString } from 'class-validator';
 
-export class CreateScheduleDto {
+export class CreateScheduleDto extends PickType{Schedule,['']
   /**
    * 공연 일자 (ISO 형식)
    * 예시: "2023-12-25T19:00:00Z"
