@@ -27,7 +27,7 @@ export class Show {
 
   @IsNotEmpty({ message: '카테고리를 입력해 주세요.' })
   @IsEnum(ShowCategory, { message: '유효한 카테고리를 입력해 주세요.' })
-  @Column({ type: 'enum', enum: ShowCategory,enumName : 'ShowCategory' })
+  @Column({ type: 'enum', enum: ShowCategory })
   category: ShowCategory;
 
   @IsNotEmpty({ message: '장소를 입력해 주세요.' })
@@ -46,7 +46,7 @@ export class Show {
 
   @IsNotEmpty({ message: '공연 상태를 입력해 주세요.' })
   @IsEnum(ShowStatus, { message: '유효한 공연 상태를 입력해 주세요.' })
-  @Column({ type: 'enum', enum: ShowStatus,enumName : 'ShowStatus' })
+  @Column({ type: 'enum', enum: ShowStatus })
   status: ShowStatus;
 
   @IsNotEmpty({ message: '공연 시작 날짜를 입력해 주세요' })

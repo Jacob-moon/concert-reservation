@@ -1,6 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsInt, IsOptional, IsArray, IsEnum } from 'class-validator';
-import { ShowCategory } from '../entities/show.entity.js';
+
+export enum ShowCategory {
+  MUSICAL = '뮤지컬',
+  CONCERT = '콘서트',
+  MOVIE = '영화',
+}
 
 export class CreateShowDto {
   @ApiProperty({ description: '공연 이름' })
