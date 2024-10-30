@@ -1,14 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Schedule } from 'src/show/entities/schedule.entity';
+import { User } from 'src/user/entities/user.entity';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 
     @Entity('books')
     export class Book {
-        @PrimaryGeneratedColumn()
+        @PrimaryGeneratedColumn({unsigned:true})
         bookId: number;
         
-        @Column()
+        @Column({unsigned:true})
         userId: number;
 
-        @Column()
+        @Column({unsigned:true})
         scheduleId: number;
     
         @CreateDateColumn()
@@ -16,6 +18,10 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
       
         @UpdateDateColumn()
         updatedAt: Date;
+
+      @ManyToOne((type):typeof User=>User,(user):Book[]=>user.books,{onDelete:'CASCADE'})
+      user:User;
+
+      @ManyToOne((type):typeof Schedule=>Schedule,{onDelete:'CASCADE'})
+      schedule:Schedule;
     }
-
-

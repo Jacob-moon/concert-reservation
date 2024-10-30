@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, Up
 import { Schedule } from './schedule.entity';
 import { IsDateString, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { ShowCategory } from '../types/show-category.type';
+import { scheduled } from 'rxjs';
 
 @Entity('shows')
 export class Show {
@@ -60,4 +61,7 @@ export class Show {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(()=>Schedule,scheduled=>scheduled.show,{cascade:true})
+  schedules:Schedule[];
 }

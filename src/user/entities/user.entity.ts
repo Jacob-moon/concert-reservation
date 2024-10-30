@@ -1,10 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
 import { IsEmail, IsNotEmpty, IsString, IsBoolean, IsStrongPassword } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Book } from 'src/books/entities/book.entity';
 
-@Entity()
+@Entity('users')
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({unsigned:true})
   userId: number;
 
     /**
@@ -33,9 +34,10 @@ export class User {
   @ApiProperty()
   @IsNotEmpty({ message: '닉네임을 입력해 주세요.' })
   @IsString()
-  @Column({ length: 50 })
+  @Column()
   nickname: string;
 
+  @Column({unsigned:true})
   points:number;
 
   @IsBoolean()
@@ -45,5 +47,9 @@ export class User {
   @CreateDateColumn()
   createdAt: Date;
 
+  @CreateDateColumn()
   updatedAt: Date;
+
+  @OneToMany((type):typeof Book=>Book,(book):User=>book.user)
+  books:Book[];
 }

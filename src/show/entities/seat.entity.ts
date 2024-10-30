@@ -1,10 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Schedule } from './schedule.entity';
+
 @Entity('seats')
-export class Schedule {
-    @PrimaryGeneratedColumn()
+export class Seat {
+    @PrimaryGeneratedColumn({unsigned:true})
     seatsId: number;
 
-    @Column()
+    @Column({unsigned:true})
     scheduleId: number;
 
     @Column({unsigned:true})
@@ -18,4 +20,8 @@ export class Schedule {
   
     @UpdateDateColumn()
     updatedAt: Date;
+
+    @OneToOne((type):typeof Schedule=>Schedule,(schedule)=>schedule.seat)
+    @JoinColumn()
+    schedule:Schedule;
 }
