@@ -1,34 +1,63 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Schedule } from '../../show/entities/schedule.entity';
+import { Schedule } from './schedule.entity';
+import { IsDateString, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+
+export enum ShowCategory {
+  MUSICAL = '뮤지컬',
+  CONCERT = '콘서트',
+  MOVIE = '영화',
+}
+
+export enum ShowStatus {
+  UPCOMING = '준비중',
+  RUNNING = '진행중',
+  COMPLETED = '완료',
+  CANCELED = '취소',
+}
 
 @Entity()
 export class Show {
   @PrimaryGeneratedColumn()
   showId: number;
 
+  @IsNotEmpty({ message: '공연명을 입력해 주세요.' })
+  @IsString()
+  @Column({ unique: true })
+  name: string;
+
+  @IsNotEmpty({ message: '카테고리를 입력해 주세요.' })
+  @IsEnum(ShowCategory, { message: '유효한 카테고리를 입력해 주세요.' })
+  @Column({ type: 'enum', enum: ShowCategory,enumName : 'ShowCategory' })
+  category: ShowCategory;
+
+  @IsNotEmpty({ message: '장소를 입력해 주세요.' })
+  @IsString()
   @Column({ length: 100 })
-  name: string; // 공연명
+  location: string;
 
-  @Column({ length: 50 })
-  category: string; // 공연 카테고리 (예: 뮤지컬, 콘서트 등)
-
-  @Column({ length: 100 })
-  location: string; // 공연이 열리는 장소
-
+  @IsString()
   @Column({ length: 255, nullable: true })
-  image: string; // 공연 이미지 URL
+  image: string;
 
+  @IsNotEmpty({ message: '공연 설명을 입력해 주세요.' })
+  @IsString()
   @Column({ type: 'text', nullable: true })
-  info: string; // 공연 설명
+  info: string;
 
-  @Column({ type: 'enum', enum: ['upcoming', 'running', 'completed','canceled'] })
-  status: string; // 공연 상태
+  @IsNotEmpty({ message: '공연 상태를 입력해 주세요.' })
+  @IsEnum(ShowStatus, { message: '유효한 공연 상태를 입력해 주세요.' })
+  @Column({ type: 'enum', enum: ShowStatus,enumName : 'ShowStatus' })
+  status: ShowStatus;
 
+  @IsNotEmpty({ message: '공연 시작 날짜를 입력해 주세요' })
+  @IsDateString()
   @Column({ type: 'date' })
-  startDate: Date; // 공연 시작 날짜
+  startDate: Date;
 
+  @IsNotEmpty({ message: '공연 종료 날짜를 입력해 주세요' })
+  @IsDateString()
   @Column({ type: 'date' })
-  endDate: Date; // 공연 종료 날짜
+  endDate: Date;
 
   @OneToMany(() => Schedule, (schedule) => schedule.show)
   schedules: Schedule[];

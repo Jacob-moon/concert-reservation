@@ -3,14 +3,17 @@ import { Show } from '../../show/entities/show.entity';
 import { Theater } from '../../show/entities/theater.entity';
 import { Ticket } from '../../show/entities/ticket.entity';
 import { ScheduledSeat } from '../../show/entities/scheduled-seat.entity';
+import { IsDateString, IsNotEmpty } from 'class-validator';
 
 @Entity()
 export class Schedule {
     @PrimaryGeneratedColumn()
     scheduleId: number;
 
+    @IsNotEmpty({message:'공연 시간과 날짜를 입력해 주세요.'})
+    @IsDateString()
     @Column({type:'timestamp'})
-    showinData: Date;
+    showingDate: Date;
 
     @ManyToOne(()=>Show,(show)=>show.schedules)
     @JoinColumn({name:'showId'})
