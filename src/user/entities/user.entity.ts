@@ -10,7 +10,7 @@ export class User {
 
     /**
    * 이메일
-   * @example "example@example.com"
+   * @example "Admin7@example.com"
    * 
    */
     @IsNotEmpty({ message: '이메일을 입력해 주세요.' })
@@ -43,7 +43,7 @@ export class User {
   points:number;
 
   @IsEnum(UserRole)
-  @Column({ default: UserRole.Customer })
+  @Column({ type:'enum',enum:UserRole,default: UserRole.Customer })
   role: UserRole;
 
   @CreateDateColumn()

@@ -17,7 +17,7 @@ export class RoleGuard extends JwtAuthGuard implements CanActivate {
  async canActivate(
     context: ExecutionContext,
   ): Promise<boolean> {
-    const authenticated = super.canActivate(context);
+    const authenticated = await super.canActivate(context);
 
     if(!authenticated){
       throw new UnauthorizedException('인증 정보가 잘못되었습니다.')

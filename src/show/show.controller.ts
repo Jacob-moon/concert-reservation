@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Param, HttpStatus, UseGuards } from '@nestjs/common';
 import { ShowService } from './show.service';
 import { CreateShowDto } from './dto/create-show.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { UserRole } from 'src/user/types/user-type.type';
 import { RoleGuard } from 'src/auth/guards/roles.guard';
@@ -16,8 +16,10 @@ export class ShowController {
    * @param createShowDto
    * @returns
    */
-  // @Roles(UserRole.Admin)
-  // @UseGuards(RoleGuard)
+
+  @ApiBearerAuth()
+  @Roles(UserRole.Admin)
+  @UseGuards(RoleGuard)
   @Post()
   async create(@Body() createShowDto: CreateShowDto) {
     const data = await this.showService.create(createShowDto);

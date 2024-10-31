@@ -26,7 +26,7 @@ import { UserModule } from 'src/user/user.module';
   }),
 ],
   controllers: [AuthController],
-  providers: [AuthService,LocalStrategy,JwtStrategy], // AuthService와 JwtStrategy 등록
- 
+  providers: [AuthService,LocalStrategy,JwtStrategy],
+  exports:[TypeOrmModule.forFeature([User])]
 })
 export class AuthModule {}
