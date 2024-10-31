@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from '../decorators/roles.decorator';
 import { JwtAuthGuard } from './jwt-auth.juard';
@@ -38,9 +38,10 @@ export class RoleGuard extends JwtAuthGuard implements CanActivate {
   const req = context.switchToHttp().getRequest();
   const userId = req.user.id;
   const user = await this.userRepository.findOneBy({userId:userId});
-
   const hasPermission =requiredRoles.some((role) => role === user.role);
-
+  if(!hasPermission){
+    throw new ForbiddenException('권한이 없습니다.');
+  }
     return true;
   }
 }
