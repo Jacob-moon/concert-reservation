@@ -40,7 +40,7 @@ export class Schedule {
     @ManyToOne((type):typeof Show=>Show,(show)=>show.schedules,{onDelete:'CASCADE'})
     @JoinColumn({ name: 'showId' })
     show:Show;
-z
+    
     @OneToOne((type):typeof Seat=>Seat,(seat)=>seat.schedule,{cascade:true})
     seat:Seat;
     

@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsNumber } from 'class-validator';
 import { Schedule } from 'src/show/entities/schedule.entity';
 import { User } from 'src/user/entities/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 
     @Entity('books')
     export class Book {
@@ -27,8 +27,10 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
         updatedAt: Date;
 
       @ManyToOne(() => User,(user) => user.books,{onDelete:'CASCADE'})
+      @JoinColumn({ name: 'userId' })
       user:User;
 
       @ManyToOne(() => Schedule, (schedule) => schedule.books, { onDelete: 'CASCADE' })
+      @JoinColumn({ name: 'scheduleId' })
       schedule: Schedule;
     }
