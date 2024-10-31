@@ -34,8 +34,6 @@ export class AuthController {
   @Post('/sign-in')
     signIn(@Request() req,@Body() signInDto: SignInDto){
     const data = this.authService.signIn(req.user.userId);
-    console.log(req.user.userId);
-    console.log(req.user);
 
     return {
       statusCode: HttpStatus.OK,

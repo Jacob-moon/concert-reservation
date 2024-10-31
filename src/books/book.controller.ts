@@ -5,6 +5,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { UserRole } from 'src/user/types/user-type.type';
 import { RoleGuard } from 'src/auth/guards/roles.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @ApiTags('예매 정보')
 @Controller('books')
@@ -22,7 +23,6 @@ export class BookController {
   @Post()
   async create(@Request()req,@Body() createBookDto: CreateBookDto) {
     const userId = req.user.userId;
-    console.log("userId:",userId);
     const data = await this.bookService.create(userId,createBookDto);
 
     return    {
@@ -37,9 +37,18 @@ export class BookController {
    * @returns 
    */
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    return this.bookService.findAll();
+  async findAll(@Request() req) {
+    const userId = req.user.userId;
+    const data = await this. bookService.findAll(userId);
+
+    return  {
+      statusCode: HttpStatus.OK,
+      message: '예매 목록 조회에 성공했습니다.',
+      data,
+    };
+    ;
   }
 
   /**
@@ -48,8 +57,10 @@ export class BookController {
    * @returns 
    */
   @ApiBearerAuth()
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bookService.findOne(+id);
+  @UseGuards(JwtAuthGuard)
+  @Get(':bookId')
+  findOne(@Request() req,@Param('bookId') bookId: number) {
+    const userId = req.user.userId;
+    return this.bookService.findOne(bookId,userId);
   }
 }
