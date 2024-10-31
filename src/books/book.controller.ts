@@ -13,24 +13,24 @@ export class BookController {
   constructor(private readonly bookService: BookService) {}
 
   /**
-   * 예매하기
-   * @param createBookDto
-   * @returns 
-   */
-  @ApiBearerAuth()
-  @Roles(UserRole.Customer)
-  @UseGuards(RoleGuard)
-  @Post()
-  async create(@Request()req,@Body() createBookDto: CreateBookDto) {
-    const userId = req.user.userId;
-    const data = await this.bookService.create(userId,createBookDto);
+ * 좌석 지정 예매하기
+ * @param createBookDto
+ * @returns 
+ */
+@ApiBearerAuth()
+@Roles(UserRole.Customer)
+@UseGuards(RoleGuard)
+@Post()
+async create(@Request() req, @Body() createBookDto: CreateBookDto) {
+  const userId = req.user.userId;
+  const data = await this.bookService.create(userId, createBookDto);
 
-    return    {
-      statusCode: HttpStatus.CREATED,
-      message: '예매에 성공했습니다.',
-      data,
-    };
-  }
+  return {
+    statusCode: HttpStatus.CREATED,
+    message: '좌석 지정 예매에 성공했습니다.',
+    data,
+  };
+}
 
   /**
    * 예매 목록 조회
@@ -83,3 +83,23 @@ async cancel(@Request() req, @Param('bookId') bookId: number) {
   };
 }
 }
+
+  // /**
+  //  * 좌석 랜덤 예매하기
+  //  * @param createBookDto
+  //  * @returns 
+  //  */
+  // @ApiBearerAuth()
+  // @Roles(UserRole.Customer)
+  // @UseGuards(RoleGuard)
+  // @Post()
+  // async create(@Request()req,@Body() createBookDto: CreateBookDto) {
+  //   const userId = req.user.userId;
+  //   const data = await this.bookService.create(userId,createBookDto);
+
+  //   return    {
+  //     statusCode: HttpStatus.CREATED,
+  //     message: '예매에 성공했습니다.',
+  //     data,
+  //   };
+  // }

@@ -11,6 +11,9 @@ export class Seat {
 
     @Column({unsigned:true})
     availableSeats: number;
+
+    @Column({type:'boolean', nullable:false,default:false })
+    isAvailable: boolean;
     
     @Column({unsigned:true})
     totalSeats:number;
@@ -22,6 +25,6 @@ export class Seat {
     updatedAt: Date;
 
     @OneToOne((type):typeof Schedule=>Schedule,(schedule)=>schedule.seat)
-    @JoinColumn({ name: 'scheduleId' })
+    @JoinColumn({ name: 'scheduleId' })    
     schedule:Schedule;
 }
