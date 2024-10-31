@@ -1,7 +1,8 @@
-import { Entity,PrimaryGeneratedColumn,Column ,CreateDateColumn, UpdateDateColumn, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
+import { Entity,PrimaryGeneratedColumn,Column ,CreateDateColumn, UpdateDateColumn, ManyToOne, OneToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Show } from './show.entity';
 import { Seat } from './seat.entity';
 import { IsDateString, IsMilitaryTime, IsNotEmpty } from 'class-validator';
+import { Book } from 'src/books/entities/book.entity';
 
 
 @Entity('schedules')
@@ -42,4 +43,7 @@ export class Schedule {
 z
     @OneToOne((type):typeof Seat=>Seat,(seat)=>seat.schedule,{cascade:true})
     seat:Seat;
+    
+    @OneToMany(() => Book, (book) => book.schedule)
+    books: Book[];
 }

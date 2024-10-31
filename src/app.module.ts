@@ -8,7 +8,7 @@ import { TypeOrmModuleOptions } from './configs/database.config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { ShowModule } from './show/show.module';
-import { BooksModule } from './books/books.module';
+import { BooksModule } from './books/book.module';
 
 @Module({
   imports: [

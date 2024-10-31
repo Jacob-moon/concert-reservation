@@ -20,6 +20,7 @@ export class UserController {
   @Get('/me')
   async findMe(@Request()req){
     const userId = req.user.userId;
+    console.log("userId:",userId);
 
     const data = await this.userService.findOneById(userId);
 

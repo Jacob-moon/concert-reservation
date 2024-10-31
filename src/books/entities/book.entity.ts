@@ -1,3 +1,4 @@
+import { IsNotEmpty, IsNumber } from 'class-validator';
 import { Schedule } from 'src/show/entities/schedule.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
@@ -10,6 +11,12 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
         @Column({unsigned:true})
         userId: number;
 
+        /**
+         * 공연회차 ID
+         * @param 5
+         */
+        @IsNumber()
+        @IsNotEmpty({message:'공연회차 ID를를 입력해 주세요.'})
         @Column({unsigned:true})
         scheduleId: number;
     
@@ -19,9 +26,9 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
         @UpdateDateColumn()
         updatedAt: Date;
 
-      @ManyToOne((type):typeof User=>User,(user):Book[]=>user.books,{onDelete:'CASCADE'})
+      @ManyToOne(() => User,(user) => user.books,{onDelete:'CASCADE'})
       user:User;
 
-      @ManyToOne((type):typeof Schedule=>Schedule,{onDelete:'CASCADE'})
-      schedule:Schedule;
+      @ManyToOne(() => Schedule, (schedule) => schedule.books, { onDelete: 'CASCADE' })
+      schedule: Schedule;
     }

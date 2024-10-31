@@ -50,7 +50,7 @@ export class AuthService {
   }
 
   signIn(userId:number){
-    const payload = {id:userId};
+    const payload = {userId:userId};
     const accessToken = this.jwtService.sign(payload);
 
     return {accessToken};
