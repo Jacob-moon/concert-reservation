@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Param, HttpStatus, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, HttpStatus, UseGuards, Query } from '@nestjs/common';
 import { ShowService } from './show.service';
 import { CreateShowDto } from './dto/create-show.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { UserRole } from 'src/user/types/user-type.type';
 import { RoleGuard } from 'src/auth/guards/roles.guard';
+import { findAllShowDto } from './dto/find-all-show.dto';
 
 @ApiTags('공연 정보')
 @Controller('shows')
@@ -35,9 +36,10 @@ export class ShowController {
    * @returns
    */
   @Get()
-  async findAll() {
-    const data = await this.showService.findAll();
-    return {
+  async findAll(@Query() findAllShowDto:findAllShowDto) {
+    const data = await this.showService.findAll(findAllShowDto);
+
+    return    {
       statusCode: HttpStatus.OK,
       message: '공연 목록 조회에 성공했습니다.',
       data,
@@ -50,11 +52,11 @@ export class ShowController {
    * @returns
    */
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    const data = await this.showService.findOne(+id);
+  async findOne(@Param('id') showId: number) {
+    const data = await this.showService.findOne(showId);
     return {
       statusCode: HttpStatus.OK,
-      message: '공연 조회에 성공했습니다.',
+      message: '공연 상세조회에 성공했습니다.',
       data,
     };
   }
