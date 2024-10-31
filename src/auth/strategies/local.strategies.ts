@@ -17,7 +17,6 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         if(!user){
             throw new UnauthorizedException('일치하는 인증 정보가 없습니다.');
         }
-        console.log(user,"테스트입니다123");
         return user;
 
     }

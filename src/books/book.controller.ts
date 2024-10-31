@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, UseGuards, HttpStatus,Request} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards, HttpStatus,Request, Delete} from '@nestjs/common';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -63,4 +63,23 @@ export class BookController {
     const userId = req.user.userId;
     return this.bookService.findOne(bookId,userId);
   }
+
+  /**
+   * 예매 취소
+   * @param id
+   * @returns
+   */
+@ApiBearerAuth()
+@Roles(UserRole.Customer)
+@UseGuards(RoleGuard)
+@Delete(':bookId')
+async cancel(@Request() req, @Param('bookId') bookId: number) {
+  const userId = req.user.userId;
+  const data = await this.bookService.cancel(bookId, userId);
+  return {
+    statusCode: HttpStatus.OK,
+    message: '예매가 취소되었습니다.',
+    data,
+  };
+}
 }

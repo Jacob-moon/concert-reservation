@@ -37,7 +37,6 @@ export class RoleGuard extends JwtAuthGuard implements CanActivate {
 
   const req = context.switchToHttp().getRequest();
   const userId = req.user.userId;
-  console.log(userId,"테스트입니다")
   const user = await this.userRepository.findOneBy({userId:userId});
   const hasPermission =requiredRoles.some((role) => role === user.role);
   if(!hasPermission){

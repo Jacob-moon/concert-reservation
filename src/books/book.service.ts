@@ -6,7 +6,6 @@ import { User } from 'src/user/entities/user.entity';
 import { Seat } from 'src/show/entities/seat.entity';
 import { Schedule } from 'src/show/entities/schedule.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Show } from 'src/show/entities/show.entity';
 
 @Injectable()
 export class BookService {
@@ -98,4 +97,62 @@ export class BookService {
     }
     return book;
   }
+
+async cancel(bookId: number, userId: number) {
+  const queryRunner = this.dataSource.createQueryRunner();
+
+  await queryRunner.connect();
+  await queryRunner.startTransaction();
+  try {
+    // 예매 정보 조회
+    const book = await queryRunner.manager.findOne(Book, {
+      where: {bookId},
+      relations: { 
+        schedule: {
+          show:true
+        }, 
+      },
+    });
+
+    console.log(book);
+
+    if (!book) {
+      throw new NotFoundException('예매 정보를 찾을 수 없습니다.');
+    }
+
+    if(userId !== book.userId){
+      throw new NotFoundException('취소는 본인만 가능합니다.')
+    }
+
+    // 공연 시작 3시간 전만 취소 가능
+    const currentTime = new Date();
+    const scheduleTime = new Date(`${book.schedule.date}T${book.schedule.time}`);
+    const threeHoursBefore = new Date(scheduleTime.getTime() - 3 * 60 * 60 * 1000);
+    if (currentTime > threeHoursBefore) {
+      throw new BadRequestException('공연 시작 3시간 전까지만 취소 가능합니다.');
+    }
+
+    // 포인트 환불
+    const user = await queryRunner.manager.findOne(User, { where: { userId } });
+    user.points += book.schedule.show.price;
+    await queryRunner.manager.save(User, user);
+
+    // 좌석 개수 증가
+    const seat = await queryRunner.manager.findOne(Seat, { where: { scheduleId: book.schedule.scheduleId } });
+    seat.availableSeats += 1;
+    await queryRunner.manager.save(Seat, seat);
+
+    // 예매 내역 삭제
+    await queryRunner.manager.delete(Book, { bookId });
+
+    await queryRunner.commitTransaction();
+    await queryRunner.release();
+
+    return { bookId, userId };
+  } catch (err) {
+    await queryRunner.rollbackTransaction();
+    await queryRunner.release();
+    throw err;
   }
+}
+}
