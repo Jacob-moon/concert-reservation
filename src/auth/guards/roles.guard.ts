@@ -1,0 +1,46 @@
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { ROLES_KEY } from '../decorators/roles.decorator';
+import { JwtAuthGuard } from './jwt-auth.juard';
+import { UserRole } from 'src/user/types/user-type.type';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/user/entities/user.entity';
+import { Repository } from 'typeorm';
+
+@Injectable()
+export class RoleGuard extends JwtAuthGuard implements CanActivate {
+  @InjectRepository(User) private readonly userRepository:Repository<User>;
+  constructor(private reflector:Reflector){
+    super();
+  }
+
+ async canActivate(
+    context: ExecutionContext,
+  ): Promise<boolean> {
+    const authenticated = super.canActivate(context);
+
+    if(!authenticated){
+      throw new UnauthorizedException('인증 정보가 잘못되었습니다.')
+    }
+
+    const requiredRoles = this.reflector.getAllAndOverride<UserRole[]>(
+      ROLES_KEY,
+      [
+      context.getHandler(),
+      context.getClass(),
+    ],
+  );
+
+  if(!requiredRoles){
+    return true;
+  }
+
+  const req = context.switchToHttp().getRequest();
+  const userId = req.user.id;
+  const user = await this.userRepository.findOneBy({userId:userId});
+
+  const hasPermission =requiredRoles.some((role) => role === user.role);
+
+    return true;
+  }
+}

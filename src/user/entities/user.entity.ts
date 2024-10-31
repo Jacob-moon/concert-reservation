@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
-import { IsEmail, IsNotEmpty, IsString, IsBoolean, IsStrongPassword, IsNumber } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, IsStrongPassword, IsNumber, IsEnum } from 'class-validator';
 import { Book } from 'src/books/entities/book.entity';
+import { UserRole } from '../types/user-type.type';
 
 @Entity('users')
 export class User {
@@ -41,9 +42,9 @@ export class User {
   @Column({unsigned:true})
   points:number;
 
-  @IsBoolean()
-  @Column({ default: false })
-  isAdmin: boolean;
+  @IsEnum(UserRole)
+  @Column({ default: UserRole.Customer })
+  role: UserRole;
 
   @CreateDateColumn()
   createdAt: Date;

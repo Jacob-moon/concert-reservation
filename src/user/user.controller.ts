@@ -1,7 +1,7 @@
 import { Controller, Get,HttpStatus,Request, UseGuards } from '@nestjs/common';
 import {UserService} from './user.service';
-import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.juard';
 
 @Controller('users')
 
@@ -16,7 +16,7 @@ export class UserController {
    * @returns 
    */
   @ApiBearerAuth()
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(JwtAuthGuard)
   @Get('/me')
   async findMe(@Request()req){
     const userId = req.user.userId;

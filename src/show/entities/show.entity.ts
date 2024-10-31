@@ -38,7 +38,7 @@ export class Show {
 
   /**
    * 장소
-   * @example '킨텍스 1전시장 1홀'
+   * @example "킨텍스 1전시장 1홀"
    */
   @IsNotEmpty({ message: '장소를 입력해 주세요.' })
   @IsString()
@@ -57,7 +57,7 @@ export class Show {
 
   /**
    * 썸네일
-   * @example 'https://ticketimage.interpark.com/Play/image/large/24/24013564_p.gif'
+   * @example "https://ticketimage.interpark.com/Play/image/large/24/24013564_p.gif"
    */
   @IsNotEmpty({message:'썸네일을 입력해 주세요'})
   @IsString()
@@ -66,7 +66,7 @@ export class Show {
   
   /**
    * 공연 날짜
-   * @example '2024-09-10'
+   * @example "2024-09-10"
    */
   @CreateDateColumn()
   createdAt: Date;

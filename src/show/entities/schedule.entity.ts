@@ -36,10 +36,10 @@ export class Schedule {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @ManyToOne((type):typeof Show=>Show,(show):Schedule[]=>show.schedules,{onDelete:'CASCADE'})
+    @ManyToOne((type):typeof Show=>Show,(show)=>show.schedules,{onDelete:'CASCADE'})
     @JoinColumn({ name: 'showId' })
     show:Show;
-
+z
     @OneToOne((type):typeof Seat=>Seat,(seat)=>seat.schedule,{cascade:true})
     seat:Seat;
 }
