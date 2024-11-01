@@ -1,3 +1,15 @@
+## 와이어 프레임 주소
+
+
+https://www.figma.com/design/18kF1wT0ECyuqTqvqeaSGe/%EA%B3%B5%EC%97%B0-%EC%98%88%EB%A7%A4%ED%95%98%EA%B8%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=0-1&node-type=canvas&t=lWYbtFF67rfzLYf8-0
+
+
+## 스웨거설정을 통해 API 호출확인을 할수 있도록 구현 했습니다.
+
+
+
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
@@ -97,3 +109,6 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
+
